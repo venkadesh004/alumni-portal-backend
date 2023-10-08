@@ -13,6 +13,10 @@ const studentSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    chatRooms: {
+        type: Array,
+        default: []
+    }
 });
 
 const StudentSchema = mongoose.model("StudentSchema", studentSchema);

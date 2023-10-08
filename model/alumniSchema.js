@@ -11,23 +11,23 @@ const alumniSchema = mongoose.Schema({
     },
     name: {
         type: String,
-        default: ""
+        default: "Your name"
     },
     company: {
         type: String,
-        default: ""
+        default: "Current Company"
     },
     position: {
         type: String,
-        default: "Unemployed"
+        default: "Current position"
     },
     location: {
         type: String,
-        default: ""
+        default: "Location"
     },
     linkedin: {
         type: String,
-        default: ""
+        default: "Linkedin id"
     },
     chat: {
         type: String,

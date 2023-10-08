@@ -1,5 +1,5 @@
 const FacultySchema = require('../model/facultySchema');
-const studentSchema = require('../model/studentSchema');
+const StudentSchema = require('../model/studentSchema');
 
 const getData = async (req, res) => {
     const data = req.body;
@@ -28,15 +28,32 @@ const addData = async (req, res) => {
 const acceptStudent = async (req, res) => {
     const data = req.body;
 
-    await studentSchema.updateOne({email: data["email"]}, {$set: {
+    await StudentSchema.updateOne({email: data["email"]}, {$set: {
         permitted: true
-    }}).then(result => {
-        return res.status(200).json(result);
+    }}).then(async result => {
+        await StudentSchema.find({
+            permitted: false
+        }).then(output => {
+            return res.status(200).json(output);
+        }).catch(err => {
+            return res.status(500).json({err: "Internal server Error!"});
+        });
     }).catch(err => {
         return res.status(500).json({err: "Internal server Error!"});
+    });
+}
+
+const getUnacceptedStudents = async (req, res) => {
+    await StudentSchema.find({
+        permitted: false
+    }).then(result => {
+        return res.status(200).json(result);
+    }).catch(err => {
+        return res.status(500).json({err: "Internal server Errro!"});
     });
 }
 
 module.exports.getData = getData;
 module.exports.addData = addData;
 module.exports.acceptStudent = acceptStudent;
+module.exports.getUnacceptedStudents = getUnacceptedStudents;
